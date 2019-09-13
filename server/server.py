@@ -91,11 +91,8 @@ def hande_new_comment(data):
 
 @socketio.on('post-id')
 def handle_postid(postid):
-    #print(type(postid))
-    req_post = Post.query.get(postid)
-    print(req_post)
-    json_data = convert_to_json(req_post)
-    print(json_data['comments'])
+    req_post = Post.query.get(postid) #get post
+    json_data = convert_to_json(req_post)   #convert to json
     socketio.emit('load-post-page', json_data, broadcast=True) #might want to double check that broadcast
 
 @socketio.on('new-post-data')

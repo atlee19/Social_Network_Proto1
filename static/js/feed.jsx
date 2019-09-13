@@ -22,7 +22,7 @@ function ContentCard(props){
 function ViewMore(props){
   return(
     <Link to={`/viewpost/${props.reqId}`}>
-      <Button variant="success" id="view-btn" onClick={props.getPostId}>View post</Button>
+      <Button variant="success" id="view-btn">View post</Button>
     </Link>
   );
 }
@@ -64,11 +64,12 @@ export default class Feed extends React.Component{
     socket.removeAllListeners();
   }
 
-  getPostId(postId){
-    let idNumber = postId;
-    socket.emit('post-id', postId)
-  }
-  //we technically dont have to use index
+  //getPostId(postId){  //WE DONT ACTUALLY NEED THIS ANYMORE! WE FORGOT TO GET RID OF IT
+    //let idNumber = postId;            //VIEW POST IS CABLE OF MAKING REQ BYITSELF BY GETTING
+    //socket.emit('post-id', postId)      //ITS ID FROM URL PARAMS!
+    //console.log("self deprecated method")
+  //}
+
   render(){
     return(
       this.state.posts.map(post =>
@@ -76,7 +77,6 @@ export default class Feed extends React.Component{
           postContent={post.content}
           key={post.id.toString()}
           reqId={post.id}
-          getPostId = {this.getPostId.bind(this, post.id)}
         />,
       )
     );
