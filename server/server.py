@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room, leave_room
 from flask_sqlalchemy import SQLAlchemy
 #from flask_marshmallow import Marshmallow
 from marshmallow import fields
@@ -93,6 +93,8 @@ def hande_new_comment(data):
 def handle_postid(postid):
     req_post = Post.query.get(postid) #get post
     json_data = convert_to_json(req_post)   #convert to json
+    join_room(postid)   #join room
+    print('joined room.')
     socketio.emit('load-post-page', json_data, broadcast=True) #might want to double check that broadcast
 
 @socketio.on('new-post-data')
@@ -107,4 +109,4 @@ def handle_newdata(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0')
+    socketio.run(app, debug=True)
