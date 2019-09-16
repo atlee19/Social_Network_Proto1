@@ -35,7 +35,7 @@ export default class PostComment extends React.Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.comment);
+    //console.log(this.state.comment);
     let newComment = this.state.comment
     //TRY CALLING LOCALSTORAGE HERE INSTEAD?
     let local = JSON.parse(localStorage.getItem('post'))

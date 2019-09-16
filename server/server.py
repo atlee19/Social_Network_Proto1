@@ -84,17 +84,25 @@ def hande_new_comment(data):
     db.session.commit()
     print('comment added')
     json_data=convert_comment_to_json(comment)
-    print(json_data)
-    socketio.emit('update-comment', json_data ,broadcast=True)
+    #print(json_data)
+    join_room(postid)
+    #print("ROOM: {}".format(room))
+    socketio.emit('update-comment', json_data , broadcast=True, room=data['id'])
     print('sent update')
 
+@socketio.on('join')
+def join(data):
+    join_room(data)
+    socketio.emit('joined', data, broadcast=True, room=data)
+    print('JOINED ROOM {}'.format(data))
 
 @socketio.on('post-id')
 def handle_postid(postid):
     req_post = Post.query.get(postid) #get post
     json_data = convert_to_json(req_post)   #convert to json
     #join_room(postid)   #join room
-    print('joined room.')
+    #socketio.emit('joined-room', postid, room=postid)
+    #print('joined room.')
     socketio.emit('load-post-page', json_data, broadcast=False) #might want to double check that broadcast
 
 @socketio.on('new-post-data')
