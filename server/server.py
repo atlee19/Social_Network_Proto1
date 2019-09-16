@@ -85,7 +85,7 @@ def hande_new_comment(data):
     print('comment added')
     json_data=convert_comment_to_json(comment)
     print(json_data)
-    socketio.emit('update-comment', json_data  ,broadcast=True)
+    socketio.emit('update-comment', json_data ,broadcast=True)
     print('sent update')
 
 
@@ -93,9 +93,9 @@ def hande_new_comment(data):
 def handle_postid(postid):
     req_post = Post.query.get(postid) #get post
     json_data = convert_to_json(req_post)   #convert to json
-    join_room(postid)   #join room
+    #join_room(postid)   #join room
     print('joined room.')
-    socketio.emit('load-post-page', json_data, broadcast=True) #might want to double check that broadcast
+    socketio.emit('load-post-page', json_data, broadcast=False) #might want to double check that broadcast
 
 @socketio.on('new-post-data')
 def handle_newdata(data):
@@ -109,4 +109,4 @@ def handle_newdata(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, host='0.0.0.0')

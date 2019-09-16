@@ -57,18 +57,20 @@ export default class ViewPost extends React.Component{
     newComment = this.state.comments.concat(newData);
     this.setState({ comments : newComment })
   }
+  
+  setPost = (data) =>(
+    this.setState({
+      id: data.id,
+      content: data.content,
+      comments: data.comments
+    })
+  )
 
   fetchPost(postIdToLoad){
-    console.log("FETCH HAS BEEN CALLED!")
+    //console.log("FETCH HAS BEEN CALLED!")
+    //we can write a custom function to stop check and stop it
     socket.emit('post-id', postIdToLoad);
-    socket.on('load-post-page', (data) =>
-      this.setState({
-        id: data.id,
-        content: data.content,
-        comments: data.comments
-      }),
-    )
-
+    socket.on('load-post-page', this.setPost)
   }
 
   componentDidMount(){
@@ -76,7 +78,9 @@ export default class ViewPost extends React.Component{
 
     if(!localStorage.getItem('post')){
       console.log('Not found in local storage. Using data fetch')
-      this.fetchPost(params.postId); //we might get error on the backend because this is a string
+      this.fetchPost(params.postId);
+      //
+      console.log("listener removed")
     } else {
       console.log("Using data from local storage")
     }
@@ -89,6 +93,7 @@ export default class ViewPost extends React.Component{
   componentWillUpdate(nextProps, nextState){
     //console.log(nextState)
     localStorage.setItem('post', JSON.stringify(nextState));
+    socket.removeListener('load-post-page', this.setPost);
   }
 
   componentWillUnmount(){
