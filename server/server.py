@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    comments = db.relationship('Comment',backref='post_owner') #This needs an integer to increment im
+    comments = db.relationship('Comment',backref='post_owner')
 
     def __repr__(self):
         return f"Post({self.id}, {self.content}), {self.comments}"

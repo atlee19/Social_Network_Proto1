@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap'
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
+import Like from './like'
 require('../css/feedstyle.css');
 
 var socket = io(); //the fact that this a global could be an issue but lets call disconnect first
@@ -14,6 +15,7 @@ function ContentCard(props){
   return(
     <Card id="content-card">
       <Card.Body>{props.postContent}</Card.Body>
+      <Like />
       <ViewMore reqId={props.reqId} getPostId={props.getPostId}/>
     </Card>
   );
