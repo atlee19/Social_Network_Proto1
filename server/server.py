@@ -20,7 +20,7 @@ class Post(db.Model):
     likes = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
-        return f"Post({self.id}, {self.content}), {self.comments}"
+        return f"Post({self.id}, {self.content}), {self.comments}, {self.likes}"
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
