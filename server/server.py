@@ -74,6 +74,10 @@ def handle_connect():
     socketio.emit('load-posts', json_data, broadcast=True)
     print('posts sent.')
 
+@socketio.on('New-Like')
+def hande_new_like(data):
+    print(data)
+
 @socketio.on('new-comment')
 def hande_new_comment(data):
     #print(data)
