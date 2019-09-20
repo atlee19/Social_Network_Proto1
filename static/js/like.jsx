@@ -11,6 +11,11 @@ export default class Like extends React.Component{
     count : 0
   }
 
+  componentWillMount(){
+    let currentCount = this.props.likes
+    this.setState({ count : currentCount })
+  }
+
   incrementLike = () => {
     this.setState( prevState => {
       return {
