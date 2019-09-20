@@ -76,7 +76,12 @@ def handle_connect():
 
 @socketio.on('New-Like')
 def hande_new_like(data):
-    print(data)
+    postid = data['id']
+    like = data['like']
+    post = Post.query.get(postid)
+    post.likes = like
+    db.session.commit()
+    print('like added')
 
 @socketio.on('new-comment')
 def hande_new_comment(data):
