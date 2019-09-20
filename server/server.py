@@ -90,7 +90,7 @@ def hande_new_comment(data):
     print('comment added')
     json_data=convert_comment_to_json(comment)
     #print(json_data)
-    join_room(postid)
+    # join_room(postid)
     #print("ROOM: {}".format(room))
     socketio.emit('update-comment', json_data , broadcast=True)
     print('sent update')
@@ -122,4 +122,4 @@ def handle_newdata(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0')
+    socketio.run(app, debug=True)

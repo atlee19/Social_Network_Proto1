@@ -51,12 +51,12 @@ export default class ViewPost extends React.Component{
     }
   }
 
-  // updateComments(newData){
-  //   console.log(newData);
-  //   let newComment;
-  //   newComment = this.state.comments.concat(newData);
-  //   this.setState({ comments : newComment })
-  // }
+  updateComments(newData){
+    console.log(newData);
+    let newComment;
+    newComment = this.state.comments.concat(newData);
+    this.setState({ comments : newComment })
+  }
 
   setPost = (data) =>(
     this.setState({
@@ -65,14 +65,12 @@ export default class ViewPost extends React.Component{
       comments: data.comments
     })
   )
-  joinRoom(postIdToLoad){
-    socket.emit('join', postIdToLoad)
-  }
+
+  // joinRoom(postIdToLoad){
+  //   socket.emit('join', postIdToLoad)
+  // }
 
   fetchPost(postIdToLoad){
-    //console.log("FETCH HAS BEEN CALLED!")
-    //we can write a custom function to stop check and stop it
-
     socket.emit('post-id', postIdToLoad);
     socket.on('load-post-page', this.setPost)
   }
@@ -83,13 +81,13 @@ export default class ViewPost extends React.Component{
     if(!localStorage.getItem('post')){
       console.log('Not found in local storage. Using data fetch')
       this.fetchPost(params.postId);
-      this.joinRoom(params.postId);
+      // this.joinRoom(params.postId);
     } else {
       console.log("Using data from local storage")
     }
     //our non specific listeners getting killed?
     socket.on('update-comment', (data) =>
-      console.log(data)
+      this.updateComments(data)
     )
     socket.on('joined',(data) =>
       console.log(data)
