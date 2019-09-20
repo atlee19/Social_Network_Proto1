@@ -92,7 +92,7 @@ def hande_new_comment(data):
     #print(json_data)
     join_room(postid)
     #print("ROOM: {}".format(room))
-    socketio.emit('update-comment', json_data , broadcast=True, room=data['id'])
+    socketio.emit('update-comment', json_data , broadcast=True)
     print('sent update')
 
 @socketio.on('join')

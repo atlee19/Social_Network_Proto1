@@ -15,7 +15,7 @@ function ContentCard(props){
   return(
     <Card id="content-card">
       <Card.Body>{props.postContent}</Card.Body>
-      <Like />
+      <Like reqId={props.reqId}/>
       <ViewMore reqId={props.reqId} getPostId={props.getPostId}/>
     </Card>
   );

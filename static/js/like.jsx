@@ -18,7 +18,12 @@ export default class Like extends React.Component{
       }
     });
     let newLike = this.state.count
-    socket.emit('New-Like', newLike)
+    let postId = this.props.reqId
+    let likeData = {
+      id: postId,
+      like : newLike
+    }
+    socket.emit('New-Like', likeData)
   }
 
   render(){
